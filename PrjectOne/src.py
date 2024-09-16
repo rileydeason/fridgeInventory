@@ -104,8 +104,8 @@ def main():
         print("0 - Exit")
         choice = input("What would you like to do? ")
 
-        if choice == 0: # exit case
-            print("Exiting")
+        if choice == '0': # exit case
+            print("Exiting...")
         elif choice == '1': # add to fridge using UI
             name = input("What are you adding? ")
             qty = input("How many? ")
