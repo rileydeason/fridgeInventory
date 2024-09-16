@@ -60,7 +60,7 @@ class Database:
 
         self.rows = self.cur.fetchall()
 
-        print(f"{'NAME':<10}{'QUANTITY':<10}{'EXPIRATION':<10}")
+        print(f"\n{'NAME':<10}{'QUANTITY':<10}{'EXPIRATION':<10}")
         print("-" * 30)
 
         for row in self.rows:
@@ -122,5 +122,8 @@ def main():
             db.show_fridge_contents()
         elif choice == '4': # NEED TO IMPLEMENT compare db entries expiration against today
             print("Removing expired items...")
+        else:
+            print("\nUnknown input, try again!")
+            continue
 
 main()
