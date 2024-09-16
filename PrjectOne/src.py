@@ -91,10 +91,36 @@ class Database:
 
 def main():
     db = Database()
+    choice = ""
+    name = ""
+    qty = 0
+    date = ""
 
-    db.insert_into_fridge_contents("Nathan", 2, "09/09/2024")
-    db.insert_into_fridge_contents("Riley", 3, "09/09/2024")
+    while choice != '0': # prompt for user input in menu
+        print("\n1 - Add something to the fridge")
+        print("2 - Remove something from the fridge")
+        print("3 - View fridge contents")
+        print("4 - Remove expired items")
+        print("0 - Exit")
+        choice = input("What would you like to do? ")
 
-    db.show_fridge_contents()
+        if choice == 0: # exit case
+            print("Exiting")
+        elif choice == '1': # add to fridge using UI
+            name = input("What are you adding? ")
+            qty = input("How many? ")
+            date = input("What does it expire? ")
+            db.insert_into_fridge_contents(name, qty, date)
+            db.show_fridge_contents()
+        elif choice == '2': # remove from fridge using UI
+            name = input("What are you removing? ")
+            date = input("When does it expire? ")
+            db.delete_fridge_contents(name, date)
+            db.show_fridge_contents()
+        elif choice == '3': # show contents of fridge
+            print("")
+            db.show_fridge_contents()
+        elif choice == '4': # NEED TO IMPLEMENT compare db entries expiration against today
+            print("Removing expired items...")
 
 main()
