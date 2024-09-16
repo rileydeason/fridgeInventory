@@ -5,6 +5,7 @@ Project one Fridge inventory system
 '''
 
 import sqlite3
+import datetime
 '''
 class Item:
     def __init__(self):
@@ -78,6 +79,9 @@ class Database:
         self.cur.execute("DELETE FROM volumes WHERE name = ? AND volume = ?",(name, volume))
         self.items.commit()
 
+    def empty_fridge(self):
+        self.cur.execute("DELETE from fridge_contents")
+
     def show_volumes(self):
         self.cur.execute("SELECT * FROM volumes")
 
@@ -101,6 +105,7 @@ def main():
         print("2 - Remove something from the fridge")
         print("3 - View fridge contents")
         print("4 - Remove expired items")
+        print("5 - Empty fridge")
         print("0 - Exit")
         choice = input("What would you like to do? ")
 
@@ -109,18 +114,25 @@ def main():
         elif choice == '1': # add to fridge using UI
             name = input("What are you adding? ")
             qty = input("How many? ")
-            date = input("What does it expire? ")
-            db.insert_into_fridge_contents(name, qty, date)
+            date = input("When does it expire (YYYY/MM/DD)? ")
+            year,month,day = map(int,date.split('/'))
+            exp_date = datetime.date(year, month, day)
+            db.insert_into_fridge_contents(name, qty, exp_date)
             db.show_fridge_contents()
         elif choice == '2': # remove from fridge using UI
             name = input("What are you removing? ")
-            date = input("When does it expire? ")
-            db.delete_fridge_contents(name, date)
+            date = input("When does it expire (YYYY/MM/DD)? ")
+            year, month, day = map(int, date.split('/'))
+            exp_date = datetime.date(year, month, day)
+            db.delete_fridge_contents(name, exp_date)
             db.show_fridge_contents()
         elif choice == '3': # show contents of fridge
             db.show_fridge_contents()
         elif choice == '4': # NEED TO IMPLEMENT compare db entries expiration against today
             print("Removing expired items...")
+        elif choice == '5':
+            db.empty_fridge()
+            db.show_fridge_contents()
         else:
             print("\nUnknown input, try again!")
             continue
