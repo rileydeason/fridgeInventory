@@ -118,7 +118,6 @@ def main():
             db.delete_fridge_contents(name, date)
             db.show_fridge_contents()
         elif choice == '3': # show contents of fridge
-            print("")
             db.show_fridge_contents()
         elif choice == '4': # NEED TO IMPLEMENT compare db entries expiration against today
             print("Removing expired items...")
