@@ -81,6 +81,11 @@ class Database:
 
     def empty_fridge(self):
         self.cur.execute("DELETE from fridge_contents")
+        self.items.commit()
+
+    def remove_expired(self):
+        self.cur.execute("DELETE from fridge_contents WHERE expiration < DATE('now')")
+        self.items.commit()
 
     def show_volumes(self):
         self.cur.execute("SELECT * FROM volumes")
@@ -130,6 +135,8 @@ def main():
             db.show_fridge_contents()
         elif choice == '4': # NEED TO IMPLEMENT compare db entries expiration against today
             print("Removing expired items...")
+            db.remove_expired()
+            db.show_fridge_contents()
         elif choice == '5':
             db.empty_fridge()
             db.show_fridge_contents()
